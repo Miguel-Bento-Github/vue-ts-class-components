@@ -16,9 +16,9 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/components/Post.vue'),
   },
   {
-    path: '/add',
-    name: 'add',
-    component: () => import('@/components/AddPost.vue'),
+    path: '/create',
+    name: 'create',
+    component: () => import('@/components/CreatePost.vue'),
   },
 ];
 

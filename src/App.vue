@@ -1,48 +1,99 @@
 <template>
-  <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="#" class="navbar-brand">Bento</a>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/tutorials" class="nav-link">Tutorials</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/add" class="nav-link">Add</router-link>
-        </li>
-      </div>
+  <div class="app">
+    <nav class="navbar">
+      <router-link to="/posts" class="router-link">Posts</router-link>
+      <router-link to="/create" class="router-link">Create Post</router-link>
     </nav>
-
-    <div class="container mt-3">
+    <div class="container">
       <router-view />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator";
 
-  export default class App extends Vue {}
+export default class App extends Vue {}
 </script>
 
 <style>
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  .navbar {
-    padding: 30px;
-  }
+.app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
 
-  .navbar a {
-    font-weight: bold;
-    color: #2c3e50;
-  }
+.container {
+  padding: 0 2rem;
+}
 
-  .router-link-exact-active {
-    color: #42b983;
+.navbar {
+  display: flex;
+  background: #be9770;
+  padding: 16px 25%;
+  justify-content: space-evenly;
+  filter: drop-shadow(2px 2px 4px #e2cbb5);
+  margin-bottom: 2rem;
+}
+
+.router-link {
+  color: #c4f0ff;
+  text-decoration: none;
+}
+
+.router-link-exact-active {
+  position: relative;
+}
+
+.router-link-exact-active::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background: #8de2ff;
+  bottom: 0;
+  left: 0;
+  animation: appearingBorder 250ms ease forwards;
+}
+
+.button,
+.input {
+  border: none;
+  box-shadow: 1px 1px 2px #be9770;
+  padding: 8px 16px;
+  border-radius: 32px;
+
+  cursor: pointer;
+  outline: thin;
+}
+
+.input {
+  background: none;
+  color: #be9770;
+}
+
+.button {
+  background: #be9770;
+  color: #c4f0ff;
+}
+
+.label {
+  padding: 8px 16px;
+}
+
+@keyframes appearingBorder {
+  from {
+    width: 0;
   }
+  to {
+    width: 100%;
+  }
+}
 </style>

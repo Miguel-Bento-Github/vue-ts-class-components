@@ -1,6 +1,6 @@
 import http from '@/http-common';
 
-class PostDataService {
+class Api {
   getAll() {
     return http.get('/posts');
   }
@@ -21,13 +21,9 @@ class PostDataService {
     return http.delete(`/posts/${id}`);
   }
 
-  deleteAll() {
-    return http.delete('/posts');
-  }
-
-  findByTitle(title: string) {
-    return http.get(`/posts?title=${title}`);
+  findById(id: string) {
+    return http.get(`/comments?postId=${id}`);
   }
 }
 
-export default new PostDataService();
+export default new Api();
