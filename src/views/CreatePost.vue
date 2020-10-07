@@ -18,7 +18,7 @@
         <textarea
           class="input description"
           id="description"
-          v-model="post.description"
+          v-model="post.body"
           name="description"
           required
         />
@@ -34,9 +34,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
-import Fetch from "@/services/Fetch";
+import Vue from "vue";
+import Component from "vue-class-component";
 import { Post } from "../types";
+import Fetch from "../services/Fetch";
 
 @Component
 export default class CreatePost extends Vue {
@@ -49,8 +50,18 @@ export default class CreatePost extends Vue {
   private showError = false;
   private showForm = true;
 
+  /**
+   * Tries to create a post with @type Post.
+   *
+   * If @property {string} post.title or @property {string} post.body is empty,
+   * @returns {undefined}.
+   * Uses the API handler @method Fetch.create to create a new post.
+   *
+   * @returns {undefined}
+   */
   async createPost(): Promise<void> {
     const { title, body, id } = this.post;
+    if (!title || !body) return;
 
     const newData: Post = {
       id,

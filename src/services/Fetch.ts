@@ -1,28 +1,33 @@
-import http from '@/http-common';
+import Http from '@/http-common';
 
+/**
+ * @classdesc This Class will represent the API handler.
+ * It will be a full CRUD @class. You can learn more about it at:
+ * {@link https://developer.mozilla.org/en-US/docs/Glossary/CRUD}
+ */
 class Fetch {
   getAll() {
-    return http.get('/posts');
+    return Http.get('/posts');
   }
 
   get(id: number) {
-    return http.get(`/posts/${id}`);
+    return Http.get(`/posts/${id}`);
   }
 
   create(data: any) {
-    return http.post('/posts', data);
+    return Http.post('/posts', data);
   }
 
   update(id: number, data: any) {
-    return http.put(`/posts/${id}`, data);
+    return Http.put(`/posts/${id}`, data);
   }
 
   delete(id: number) {
-    return http.delete(`/posts/${id}`);
+    return Http.delete(`/posts/${id}`);
   }
 
   findById(id: string) {
-    return http.get(`/comments?postId=${id}`);
+    return Http.get(`/comments?postId=${id}`);
   }
 }
 
