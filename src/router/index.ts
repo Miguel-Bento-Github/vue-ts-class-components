@@ -8,17 +8,17 @@ const routes: Array<RouteConfig> = [
     path: '/',
     alias: '/posts',
     name: 'posts',
-    component: () => import('@/components/PostsList.vue'),
+    component: () => import('@/views/PostsList.vue'),
   },
   {
     path: '/posts/:id',
     name: 'post-details',
-    component: () => import('@/components/Post.vue'),
+    component: () => import('@/components/ActivePost.vue'),
   },
   {
     path: '/create',
     name: 'create',
-    component: () => import('@/components/CreatePost.vue'),
+    component: () => import('@/views/CreatePost.vue'),
   },
 ];
 

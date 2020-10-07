@@ -31,6 +31,12 @@ export default class App extends Vue {}
   line-height: 1.5;
 }
 
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
 .container {
   padding: 0 2rem;
 }
@@ -38,7 +44,7 @@ export default class App extends Vue {}
 .navbar {
   display: flex;
   background: #be9770;
-  padding: 16px 25%;
+  padding: 1rem 25%;
   justify-content: space-evenly;
   filter: drop-shadow(2px 2px 4px #e2cbb5);
   margin-bottom: 2rem;
@@ -60,35 +66,49 @@ export default class App extends Vue {}
   background: #8de2ff;
   bottom: 0;
   left: 0;
-  animation: appearingBorder 250ms ease forwards;
+  animation: width 250ms ease forwards;
 }
 
 .button,
 .input {
   border: none;
   box-shadow: 1px 1px 2px #be9770;
-  padding: 8px 16px;
-  border-radius: 32px;
-
-  cursor: pointer;
+  padding: 0.5rem 1rem;
   outline: thin;
 }
 
 .input {
+  border-radius: 0.5rem;
   background: none;
   color: #be9770;
 }
 
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .button {
+  border-radius: 2rem;
   background: #be9770;
   color: #c4f0ff;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #bc8e61;
 }
 
 .label {
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
 }
 
-@keyframes appearingBorder {
+.description {
+  resize: none;
+}
+
+@keyframes width {
   from {
     width: 0;
   }

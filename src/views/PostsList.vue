@@ -4,7 +4,7 @@
       <input
         type="number"
         class="input"
-        placeholder="Search by id"
+        placeholder="search id here..."
         v-model="searchId"
       />
       <button class="button" type="button" @click="searchById">Search</button>
@@ -38,6 +38,7 @@
           {{ currentPost.published ? "Published" : "Unpublished" }}
         </span>
         <router-link
+          @deleted="log"
           class="badge badge-warning"
           :to="`/posts/${currentPost.id}`"
         >
@@ -51,14 +52,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Api from "../services/Api";
-import { Post } from "./types";
+import Fetch from "@/services/Fetch";
+import { Post } from "@/types";
 
 @Component
 export default class PostList extends Vue {
   private posts: Post[] = [
     {
       id: 0,
+      title: "",
       body: "",
     },
   ];
@@ -66,9 +68,13 @@ export default class PostList extends Vue {
   private currentIndex = -1;
   private searchId = "";
 
+  log() {
+    console.log("d");
+  }
+
   async fetchPosts() {
     try {
-      const { data } = await Api.getAll();
+      const { data } = await Fetch.getAll();
       this.posts = data;
     } catch (error) {
       throw new Error(error);
@@ -77,7 +83,7 @@ export default class PostList extends Vue {
 
   async searchById() {
     try {
-      const { data } = await Api.findById(this.searchId);
+      const { data } = await Fetch.findById(this.searchId);
       this.posts = data;
     } catch (error) {
       throw new Error(error);
@@ -96,27 +102,32 @@ export default class PostList extends Vue {
 </script>
 
 <style scoped>
+.search .button {
+  margin-left: 1rem;
+}
+
 .posts-list {
   margin-top: 1rem;
 }
 
 .post-container {
-  height: 60vh;
+  height: 45vh;
   overflow: auto;
   display: flex;
   flex-flow: column wrap;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
 }
 
 .post {
   margin: 1px;
   width: 20vw;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
   transition: all 1s ease;
+  border-radius: 0.25rem;
 }
 
 .post:nth-child(even) {
@@ -124,9 +135,9 @@ export default class PostList extends Vue {
 }
 
 .post:hover {
-  box-shadow: 0 0 4px #333;
+  box-shadow: 0 0 0.25rem #333;
   cursor: pointer;
-  transition: all 50ms ease;
+  transition-duration: 50ms;
 }
 
 .post-card {

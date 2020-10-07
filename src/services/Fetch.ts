@@ -1,6 +1,6 @@
 import http from '@/http-common';
 
-class Api {
+class Fetch {
   getAll() {
     return http.get('/posts');
   }
@@ -26,4 +26,4 @@ class Api {
   }
 }
 
-export default new Api();
+export default new Fetch();
