@@ -1,7 +1,12 @@
 <template>
   <div class="posts">
     <div class="search">
-      <input type="number" class="input" placeholder="search id here..." v-model="searchId" />
+      <input
+        type="number"
+        class="input"
+        placeholder="search id here..."
+        v-model="searchId"
+      />
       <button class="button" type="button" @click="searchById">Search</button>
     </div>
     <main class="post-container">
@@ -26,97 +31,101 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import Fetch from '@/services/Fetch';
-  import { Post } from '@/types';
-  import PostCard from '../components/PostCard.vue';
+import { Component, Vue } from "vue-property-decorator";
+import Fetch from "@/services/Fetch";
+import { Post } from "@/types";
+import PostCard from "../components/PostCard.vue";
 
-  @Component({
-    components: {
-      PostCard,
+@Component({
+  components: {
+    PostCard,
+  },
+})
+export default class PostList extends Vue {
+  private posts: Post[] = [
+    {
+      id: 0,
+      title: "",
+      body: "",
     },
-  })
-  export default class PostList extends Vue {
-    private posts: Post[] = [
-      {
-        id: 0,
-        title: '',
-        body: '',
-      },
-    ];
-    private selectedPost: Post | null = null;
-    private currentIndex = -1;
-    private searchId = '';
+  ];
+  private selectedPost: Post | null = null;
+  private currentIndex = -1;
+  private searchId = "";
 
-    async fetchPosts() {
-      try {
-        const { data } = await Fetch.getAll();
-        this.posts = data;
-      } catch (error) {
-        throw new Error(error);
-      }
-    }
-
-    async searchById() {
-      try {
-        const { data } = await Fetch.findById(this.searchId);
-        this.posts = data;
-      } catch (error) {
-        throw new Error(error);
-      }
-    }
-
-    setActivePost(post: Post, index: number) {
-      this.selectedPost = post;
-      this.currentIndex = index;
-    }
-
-    mounted() {
-      this.fetchPosts();
+  async fetchPosts() {
+    try {
+      const { data } = await Fetch.getAll();
+      this.posts = data;
+    } catch (error) {
+      throw new Error(error);
     }
   }
+
+  async searchById() {
+    try {
+      const { data } = await Fetch.findById(this.searchId);
+      this.posts = data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  setActivePost(post: Post, index: number) {
+    this.selectedPost = post;
+    this.currentIndex = index;
+  }
+
+  mounted() {
+    this.fetchPosts();
+  }
+}
 </script>
 
 <style scoped>
-  .search .button {
-    margin-left: 1rem;
-  }
+.search .button {
+  margin-left: 1rem;
+}
 
-  .post-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 0 1rem;
-  }
+.post-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 0 1rem;
+}
 
-  .post-list,
-  .post-card {
-    box-shadow: 7px 7px 14px #090916, -7px -7px 14px #25255a;
-    border-radius: 0.5rem;
-  }
+.post-list,
+.post-card {
+  box-shadow: 7px 7px 14px #090916, -7px -7px 14px #25255a;
+  border-radius: 0.5rem;
+}
 
-  .title {
-    padding: 0 1rem;
-  }
+.post-list {
+  padding-bottom: 3rem;
+}
 
-  .post {
-    width: 30vw;
-    margin: 2px;
-    padding: 0.25rem 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
-    transition: all 1s ease;
-    border-radius: 0.25rem;
-  }
+.title {
+  padding: 0 1rem;
+}
 
-  .post:nth-child(odd) {
-    background: #25255a;
-  }
+.post {
+  width: 32vw;
+  margin: 2px;
+  padding: 0.25rem 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  transition: all 1s ease;
+  border-radius: 0.25rem;
+}
 
-  .post:hover {
-    box-shadow: 0 0 2px #d0d0ff;
-    cursor: pointer;
-    transition-duration: 50ms;
-  }
+.post:nth-child(odd) {
+  background: #25255a;
+}
+
+.post:hover {
+  box-shadow: 0 0 2px #d0d0ff;
+  cursor: pointer;
+  transition-duration: 50ms;
+}
 </style>

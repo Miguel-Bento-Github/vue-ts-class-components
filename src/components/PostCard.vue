@@ -10,10 +10,10 @@
           Edit
         </router-link>
       </header>
-      <span>
+      <div class="post-card-content">
         <strong>Description:</strong>
         {{ selectedPost.body }}
-      </span>
+      </div>
     </article>
     <p class="inactive-post-card" v-else>Click on a post...</p>
   </div>
@@ -25,7 +25,7 @@ import { Post } from "../types";
 
 const PostCardProps = Vue.extend({
   props: {
-    selectedPost: Object,
+    selectedPost: Object as () => Post,
   },
 });
 
@@ -35,22 +35,31 @@ export default class PostCard extends PostCardProps {}
 
 <style scoped>
 .post-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 4rem;
 }
 
-.post-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@media screen and (min-width: 500px) {
+  .post-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}
+
+.button {
+  margin: 0;
 }
 
 .post-card-title {
   padding-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .router-link {
   width: max-content;
+}
+
+.post-card-content {
+  padding: 2rem 0;
 }
 </style>

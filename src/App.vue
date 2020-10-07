@@ -122,7 +122,7 @@ textarea {
 }
 
 .post-update {
-  width: 100vh;
+  width: 45vw;
   margin: 0 auto;
 }
 
