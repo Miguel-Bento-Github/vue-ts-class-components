@@ -13,7 +13,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/posts/:id',
     name: 'post-details',
-    component: () => import('@/components/ActivePost.vue'),
+    component: () => import('@/components/EditPost.vue'),
   },
   {
     path: '/create',

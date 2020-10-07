@@ -26,16 +26,15 @@
       <button @click="createPost" class="button">Submit</button>
     </form>
 
-    <div class="post-created" v-else>
-      <p>Post created!</p>
+    <div v-else>
+      <p class="post-created">Post created!</p>
       <button class="button" @click="newPost">Back to creation</button>
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
+import { Component, Vue } from "vue-property-decorator";
 import { Post } from "../types";
 import Fetch from "../services/Fetch";
 
@@ -91,32 +90,8 @@ const defaultPost = {
 };
 </script>
 
-<style>
-.post-update {
-  width: 100vh;
-  margin: 0 auto;
-}
-
-.input {
-  margin: 0.5rem 1rem;
-}
-
-.description {
-  height: 20vh;
-}
-
-.input-control {
-  display: flex;
-  flex-direction: column;
-}
-
-.button {
-  margin: 1rem;
-}
-
+<style scoped>
 .post-created {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-left: 1rem;
 }
 </style>

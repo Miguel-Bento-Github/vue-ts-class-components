@@ -1,152 +1,122 @@
 <template>
   <div class="posts">
     <div class="search">
-      <input
-        type="number"
-        class="input"
-        placeholder="search id here..."
-        v-model="searchId"
-      />
+      <input type="number" class="input" placeholder="search id here..." v-model="searchId" />
       <button class="button" type="button" @click="searchById">Search</button>
     </div>
-
-    <div class="posts-list">
-      <h3>Post List</h3>
-      <div class="post-container">
-        <div
-          class="post"
-          :class="{ active: index == currentIndex }"
-          v-for="(post, index) in posts"
-          :key="post.id"
-          @click="setActivePost(post, index)"
-        >
-          {{ post.title || post.name }}
+    <main class="post-container">
+      <div class="post-list">
+        <h3 class="title">Post List</h3>
+        <div class="post-list-container">
+          <div
+            class="post"
+            :class="{ active: index == currentIndex }"
+            v-for="(post, index) in posts"
+            :key="post.id"
+            @click="setActivePost(post, index)"
+          >
+            {{ post.title || post.name }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="post-card">
-      <div class="active-post-card" v-if="currentPost">
-        <h3>Post</h3>
-        <span> <strong>Title:</strong> {{ currentPost.title }} </span>
-        <span>
-          <strong>Description:</strong>
-          {{ currentPost.body }}
-        </span>
-        <span>
-          <strong>Status:</strong>
-          {{ currentPost.published ? "Published" : "Unpublished" }}
-        </span>
-        <router-link
-          @deleted="log"
-          class="badge badge-warning"
-          :to="`/posts/${currentPost.id}`"
-        >
-          Edit
-        </router-link>
-      </div>
-      <p class="inactive-post-card" v-else>Click on a post...</p>
-    </div>
+      <PostCard :selectedPost="selectedPost" />
+    </main>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import Fetch from "@/services/Fetch";
-import { Post } from "@/types";
+  import { Component, Vue } from 'vue-property-decorator';
+  import Fetch from '@/services/Fetch';
+  import { Post } from '@/types';
+  import PostCard from '../components/PostCard.vue';
 
-@Component
-export default class PostList extends Vue {
-  private posts: Post[] = [
-    {
-      id: 0,
-      title: "",
-      body: "",
+  @Component({
+    components: {
+      PostCard,
     },
-  ];
-  private currentPost: Post | null = null;
-  private currentIndex = -1;
-  private searchId = "";
+  })
+  export default class PostList extends Vue {
+    private posts: Post[] = [
+      {
+        id: 0,
+        title: '',
+        body: '',
+      },
+    ];
+    private selectedPost: Post | null = null;
+    private currentIndex = -1;
+    private searchId = '';
 
-  log() {
-    console.log("d");
-  }
+    async fetchPosts() {
+      try {
+        const { data } = await Fetch.getAll();
+        this.posts = data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
 
-  async fetchPosts() {
-    try {
-      const { data } = await Fetch.getAll();
-      this.posts = data;
-    } catch (error) {
-      throw new Error(error);
+    async searchById() {
+      try {
+        const { data } = await Fetch.findById(this.searchId);
+        this.posts = data;
+      } catch (error) {
+        throw new Error(error);
+      }
+    }
+
+    setActivePost(post: Post, index: number) {
+      this.selectedPost = post;
+      this.currentIndex = index;
+    }
+
+    mounted() {
+      this.fetchPosts();
     }
   }
-
-  async searchById() {
-    try {
-      const { data } = await Fetch.findById(this.searchId);
-      this.posts = data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  setActivePost(post: Post, index: number) {
-    this.currentPost = post;
-    this.currentIndex = index;
-  }
-
-  mounted() {
-    this.fetchPosts();
-  }
-}
 </script>
 
 <style scoped>
-.search .button {
-  margin-left: 1rem;
-}
+  .search .button {
+    margin-left: 1rem;
+  }
 
-.posts-list {
-  margin-top: 1rem;
-}
+  .post-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 1rem;
+  }
 
-.post-container {
-  height: 45vh;
-  overflow: auto;
-  display: flex;
-  flex-flow: column wrap;
-  padding: 0.25rem 0.5rem;
-}
+  .post-list,
+  .post-card {
+    box-shadow: 7px 7px 14px #090916, -7px -7px 14px #25255a;
+    border-radius: 0.5rem;
+  }
 
-.post {
-  margin: 1px;
-  width: 20vw;
-  padding: 0.25rem 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  transition: all 1s ease;
-  border-radius: 0.25rem;
-}
+  .title {
+    padding: 0 1rem;
+  }
 
-.post:nth-child(even) {
-  background: #f4f4f4;
-}
+  .post {
+    width: 30vw;
+    margin: 2px;
+    padding: 0.25rem 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    transition: all 1s ease;
+    border-radius: 0.25rem;
+  }
 
-.post:hover {
-  box-shadow: 0 0 0.25rem #333;
-  cursor: pointer;
-  transition-duration: 50ms;
-}
+  .post:nth-child(odd) {
+    background: #25255a;
+  }
 
-.post-card {
-  margin-top: 1rem;
-}
-
-.active-post-card {
-  display: flex;
-  flex-direction: column;
-}
+  .post:hover {
+    box-shadow: 0 0 2px #d0d0ff;
+    cursor: pointer;
+    transition-duration: 50ms;
+  }
 </style>
