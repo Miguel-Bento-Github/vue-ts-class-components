@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "target": "ES5",
-    "strict": true,
-    "removeComments": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "baseUrl": ".",
+    "lib": ["ES2015", "DOM", "DOM.Iterable", "ScriptHost"],
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["ES2015", "DOM", "DOM.Iterable", "ScriptHost"]
+    "removeComments": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "sourceMap": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.vue"]
 }
