@@ -17,6 +17,8 @@ export default class App extends Vue {}
 </script>
 
 <style>
+@import url("./styles/keyframes.css");
+
 .app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   width: 100%;
@@ -124,14 +126,5 @@ textarea {
 .post-update {
   width: 45vw;
   margin: 0 auto;
-}
-
-@keyframes width {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
 }
 </style>
