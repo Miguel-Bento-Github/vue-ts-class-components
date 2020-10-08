@@ -1,4 +1,4 @@
-import Http from '@/http-common';
+import Http from './http';
 
 /**
  * @classdesc This Class will represent the API handler.
