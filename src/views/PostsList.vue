@@ -9,6 +9,7 @@
       />
       <button class="button" type="button" @click="searchById">Search</button>
     </div>
+    <p v-if="isLoading">Loading...</p>
     <main class="post-container">
       <div class="post-list">
         <h3 class="title">Post List</h3>
@@ -42,23 +43,27 @@ import PostCard from "../components/PostCard.vue";
   },
 })
 export default class PostList extends Vue {
-  private posts: Post[] = [
+  posts: Post[] = [
     {
       id: 0,
       title: "",
       body: "",
     },
   ];
-  private selectedPost: Post | null = null;
-  private currentIndex = -1;
-  private searchId = "";
+  selectedPost: Post | null = null;
+  currentIndex = -1;
+  searchId = "";
+  isLoading = false;
 
   async fetchPosts() {
+    this.isLoading = true;
     try {
       const { data } = await Fetch.getAll();
       this.posts = data;
     } catch (error) {
       throw new Error(error);
+    } finally {
+      this.isLoading = false;
     }
   }
 

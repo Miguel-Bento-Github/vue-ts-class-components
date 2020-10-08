@@ -50,15 +50,13 @@ export default class CreatePost extends Vue {
   private showForm = true;
 
   /**
-   * Tries to create a post with @type Post.
+   * Create a post with @type Post.
    *
    * If @property {string} post.title or @property {string} post.body is empty,
    * @returns {undefined}.
    * Uses the API handler @method Fetch.create to create a new post.
-   *
-   * @returns {undefined}
    */
-  async createPost(): Promise<void> {
+  async createPost() {
     const { title, body, id } = this.post;
     if (!title || !body) return;
 
