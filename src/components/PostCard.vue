@@ -2,7 +2,9 @@
   <div class="post-card">
     <article class="post-card-active" v-if="selectedPost">
       <header class="post-card-header">
-        <h2 class="post-card-title">{{ selectedPost.title }}</h2>
+        <h2 class="post-card-title">
+          {{ selectedPost.title || selectedPost.name }}
+        </h2>
         <router-link
           class="button router-link"
           :to="`/posts/${selectedPost.id}`"
